@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>repl.it</title>
+    <link href="style.css" rel="stylesheet"
+    type="text/css" /><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	  <style>
+	  		@import url("https://fonts.googleapis.com/css?family=Lora:400,400i,700");
+			body {
+			  display: flex;
+			  justify-content: center;
+			  align-items: center;
+			  min-height: 100vh;
+			  margin: 0;
+			  font-family: Lora, sans-serif;
+			}
+
+			p {
+			  margin: 0;
+			}
+
+			#burger-toggle {
+			  position: absolute;
+			  appearance: none;
+			  opacity: 0;
+			}
+			#burger-toggle:checked ~ .menu {
+			  opacity: 1;
+			  visibility: visible;
+			}
+			#burger-toggle:checked ~ .menu .menu-nav-link span div,
+			#burger-toggle:checked ~ .menu img,
+			#burger-toggle:checked ~ .menu .title p {
+			  transform: translateY(0);
+			  transition: 1.2s 0.1s cubic-bezier(0.35, 0, 0.07, 1);
+			}
+			#burger-toggle:checked ~ .menu .image-link:nth-child(1) img {
+			  transition-delay: 0.18s;
+			}
+			#burger-toggle:checked ~ .menu .image-link:nth-child(2) img {
+			  transition-delay: 0.26s;
+			}
+			#burger-toggle:checked ~ .menu .image-link:nth-child(3) img {
+			  transition-delay: 0.34s;
+			}
+			#burger-toggle:checked ~ .menu .image-link:nth-child(4) img {
+			  transition-delay: 0.42s;
+			}
+			#burger-toggle:checked ~ .burger-menu .line::after {
+			  transform: translateX(0);
+			}
+			#burger-toggle:checked ~ .burger-menu .line:nth-child(1) {
+			  transform: translateY(calc(var(--burger-menu-radius) / 5)) rotate(45deg);
+			}
+			#burger-toggle:checked ~ .burger-menu .line:nth-child(2) {
+			  transform: scaleX(0);
+			}
+			#burger-toggle:checked ~ .burger-menu .line:nth-child(3) {
+			  transform: translateY(calc(var(--burger-menu-radius) / -5)) rotate(-45deg);
+			}
+
+			.burger-menu {
+			  --burger-menu-radius: 4em;
+			  position: fixed;
+			  top: 5vh;
+			  left: 5vw;
+			  z-index: 100;
+			  display: block;
+			  width: var(--burger-menu-radius);
+			  height: var(--burger-menu-radius);
+			  outline: none;
+			  cursor: pointer;
+			}
+			.burger-menu .line {
+			  position: absolute;
+			  left: 25%;
+			  width: 50%;
+			  height: 3px;
+			  background: rgba(43, 61, 79, 0.3);
+			  border-radius: 10px;
+			  overflow: hidden;
+			  transition: 0.5s;
+			}
+			.burger-menu .line:nth-child(1) {
+			  top: 30%;
+			}
+			.burger-menu .line:nth-child(2) {
+			  top: 50%;
+			}
+			.burger-menu .line:nth-child(3) {
+			  top: 70%;
+			}
+			.burger-menu .line::after {
+			  position: absolute;
+			  content: "";
+			  top: 0;
+			  left: 0;
+			  width: 100%;
+			  height: 100%;
+			  background: var(--primary-color-darker);
+			  transform: translateX(-100%);
+			  transition: 0.25s;
+			}
+			.burger-menu .line:nth-child(2)::after {
+			  transition-delay: 0.1s;
+			}
+			.burger-menu .line:nth-child(3)::after {
+			  transition-delay: 0.2s;
+			}
+			.burger-menu:hover .line::after {
+			  transform: translateX(0);
+			}
+
+			.menu {
+			  position: fixed;
+			  top: 0;
+			  left: 0;
+			  width: 100%;
+			  height: 100%;
+			  display: flex;
+			  justify-content: center;
+			  align-items: center;
+			  background: #1a1e23;
+			  opacity: 0;
+			  overflow-x: hidden;
+			  visibility: hidden;
+			  transition: 0.3s;
+			}
+			@media screen and (max-width: 750px) {
+			  .menu {
+				display: block;
+			  }
+			}
+			.menu-nav {
+			  display: flex;
+			  flex-wrap: wrap;
+			  margin: 0;
+			  padding: 0;
+			  text-align: center;
+			  list-style-type: none;
+			}
+			@media screen and (max-width: 750px) {
+			  .menu-nav {
+				flex-direction: column;
+			  }
+			}
+			.menu-nav-item {
+			  flex: 1;
+			}
+			.menu-nav-link {
+			  position: relative;
+			  display: inline-flex;
+			  font-size: 2rem;
+			  color: white;
+			  text-decoration: none;
+			}
+			.menu-nav-link span {
+			  overflow: hidden;
+			}
+			.menu-nav-link span div {
+			  transform: translateY(102%);
+			}
+			.menu-nav-link::after {
+			  position: absolute;
+			  content: "";
+			  top: 100%;
+			  left: 0;
+			  width: 100%;
+			  height: 3px;
+			  background: var(--primary-color);
+			  transform: scaleX(0);
+			  transform-origin: right;
+			  transition: transform 0.5s;
+			}
+			.menu-nav-link:hover::after {
+			  transform: scaleX(1);
+			  transform-origin: left;
+			}
+			.menu .gallery {
+			  margin-top: 60px;
+			  text-align: center;
+			}
+			.menu .title {
+			  font-size: 24px;
+			  color: white;
+			  overflow: hidden;
+			}
+			.menu .title p {
+			  font-size: 12px;
+			  letter-spacing: 2px;
+			  text-transform: uppercase;
+			  transform: translateY(102%);
+			}
+			.menu .images {
+			  margin-top: 36px;
+			  display: flex;
+			  flex-wrap: wrap;
+			}
+			@media screen and (max-width: 750px) {
+			  .menu .images {
+				justify-content: center;
+			  }
+			}
+			.menu .images .image-link {
+			  width: 15vw;
+			  margin: 0 12px;
+			  overflow: hidden;
+			}
+			@media screen and (max-width: 750px) {
+			  .menu .images .image-link {
+				width: 40vw;
+				margin: 0 12px 12px 0;
+			  }
+			}
+			.menu .images .image-link .image {
+			  position: relative;
+			  transition: 0.6s;
+			}
+			.menu .images .image-link .image::before {
+			  position: absolute;
+			  content: attr(data-label);
+			  top: 0;
+			  left: 0;
+			  z-index: 1;
+			  display: flex;
+			  justify-content: center;
+			  align-items: center;
+			  width: 100%;
+			  height: 100%;
+			  color: white;
+			  background: rgba(0, 0, 0, 0.6);
+			  opacity: 0;
+			  transition: 0.4s;
+			}
+			.menu .images .image-link:hover .image {
+			  transform: scale(1.2);
+			}
+			.menu .images .image-link:hover .image::before {
+			  opacity: 1;
+			}
+			.menu .images img {
+			  height: 250px;
+			  transform: translateY(102%);
+			}
+	  </style>
+
+</head>
+<body>
+<div>
+  <h1>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Click the burger menu to see the magic</h1>
+  <h1>&nbsp;&nbsp;</h1>
+	<div style="float: left">
+<img src="https://i.imgur.com/MALj17x.png" width="400" class="rounded-circle"/></div>
+    <h1>&nbsp;</h1>
+<h1>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Myself&nbsp;</h1>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Xin chào mình là Hà Anh. Năm nay mình 13 tuổi, đang sống tại Việt Nam.&nbsp; Sở thích của mình là đọc sách và nghe nhạc vào thời gian rảnh rỗi. Vì lịch học của mình khá là nhiều nên mình cần một thời khóabiểu để sắp xếp lại công việc trong ngày.&nbsp; &nbsp; &nbsp;</p>
+<p>&nbsp; &nbsp;&nbsp;Hello my name's Ha Anh. I'm 13 years old and I live in Vietnam. My hobbies are reading books and listening to musices in my spare time. Because I have a lot of schedule so I need a school schedule to arrange things in a day.&nbsp;&nbsp;</p>
+<p>&nbsp; &nbsp; Thank for reading ^^&nbsp;</p>
+
+
+	<h2>Và đây là thời khóa biểu của mình&nbsp;✨ </h2>
+
+
+ <img src="https://i.imgur.com/FOMsKNk.png" width="1168" height="597" class="rounded">
+
+
+	<div id="footer">
+  <p> Email: haanh3808@gmail.com</p>
+  <p> Địa chỉ: Đan Phượng, Hà Nội, Việt Nam</p>
+  <p> SĐT: 0974488243 </p>
+  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12621.28811361297!2d105.69185527072838!3d21.096311845007598!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x313455e8aff8546f%3A0xfa4cad74d9887ffe!2zVMOibiBI4buZaSwgxJBhbiBQaMaw4bujbmcsIEjDoCBO4buZaSwgVmnhu4d0IE5hbQ!5e1!3m2!1svi!2s!4v1624110610674!5m2!1svi!2s" width="400" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+</div>
+
+
+  <input type="checkbox" id="burger-toggle">
+	<label for="burger-toggle" class="burger-menu">
+	  <div class="line"></div>
+	  <div class="line"></div>
+	  <div class="line"></div>
+	</label>
+	<div class="menu">
+	  <div class="menu-inner">
+		<ul class="menu-nav">
+		  <li class="menu-nav-item"><a class="menu-nav-link" href="#"><span>
+				<div>Animals</div>
+			  </span></a></li>
+		  <li class="menu-nav-item"><a class="menu-nav-link" href="#"><span>
+				<div>
+				  <p>Plants&nbsp;</p>
+
+				</div>
+			  </span></a></li>
+		  <li class="menu-nav-item"><a class="menu-nav-link" href="#"><span>
+				<div>Clothes</div>
+			  </span></a></li>
+		  <li class="menu-nav-item"><a class="menu-nav-link" href="#"><span>
+				<div>People&nbsp;</div>
+			  </span></a></li>
+		</ul>
+		<div class="gallery">
+		  <div class="title">
+			<p>THEME&nbsp;</p>
+		  </div>
+		  <div class="images">
+			<a class="image-link" href="{url % 'animals' %}">
+			  <div class="image" data-label="Animals"><img src="https://i.imgur.com/hRXOc6V.png" alt=""></div>
+			</a>
+			<a class="image-link" href="{% url 'plants' %}">
+			  <div class="image" data-label="Plants"><img src="https://i.imgur.com/Ngd5N8H.png" alt=""></div>
+			</a>
+			<a class="image-link" href="{% url 'clothes' %}">
+			  <div class="image" data-label="Clothes"><img src="https://i.imgur.com/CoNosUO.png" alt=""></div>
+			</a>
+			<a class="image-link" href="{% url 'people' %}">
+			  <div class="image" data-label="People"><img src="https://i.imgur.com/hob3cyW.png" alt=""></div>
+			</a>
+
+		  </div>
+		</div>
+	  </div>
+	</div>
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
